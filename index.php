@@ -1,5 +1,6 @@
 <?php
- echo "hello";
+  //buat koneksi ke database uas-kelompok6
+  mysqli_connect()
 
 
 
@@ -50,29 +51,73 @@
             </div>
         </section>
         <!--Input Data-->
-        <section id="data" class="data">
-            <div class="container">
-                <div class="input-field col s12">
-                    <select>
-                      <optgroup label="">
-                        <option value="1">Option 1</option>
-                        <option value="2">Option 2</option>
-                      </optgroup>
-                      <optgroup label="team 2">
-                        <option value="3">Option 3</option>
-                        <option value="4">Option 4</option>
-                      </optgroup>
-                    </select>
-                    <label>Optgroups</label>
-                </div>
+      <div class="container mb-5">
+	      <h3 align="center" style="margin: 60px 10px 10px 10px;">DATA PASIEN COVID-19</h3><hr>
+        <div class="row">
+          <div class="col-sm-6">
+            <div class="form-group">
+              <label>Provinsi</label>
+              <select class="form-control" name="provinsi" id="provinsi">
+                <option value=""> Pilih Provinsi</option>
+              </select>
             </div>
-        </section>
+        
+            <div class="form-group">
+              <label>Kota/Kabupaten</label>
+              <select class="form-control" name="kabupaten" id="kabupaten">
+                <option value=""></option>
+              </select>
+            </div>
+  
+            <div class="form-group">
+              <label>Kecamatan</label>
+              <select class="form-control" name="kecamatan" id="kecamatan">
+                <option value=""></option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Jenis Faskes</label>
+              <select class="form-control" name="jenis" id="jenis">
+                <option value=""></option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Nama Faskes</label>
+              <select class="form-control" name="faskes" id="faskes">
+                <option value=""></option>
+              </select>
+            </div>
+            <div class="input-field col s12">
+              <textarea id="textarea2" class="materialize-textarea" data-length="120"></textarea>
+              <label for="textarea2">NIK</label>
+            </div>
+            <div class="input-field col s12">
+              <textarea id="textarea2" class="materialize-textarea" data-length="120"></textarea>
+              <label for="textarea2">Nama</label>
+            </div>
+            <div class="input-field col s6">
+              <input id="umur" type="number" class="validate">
+              <label for="umur">Umur</label>
+            </div>
+            <div class="input-field col s6">
+              <input id="hp" type="text" class="validate">
+              <label for="hp">Tanggal Lahir</label>
+            </div>
+            <div class="input-field col s12">
+              <textarea id="alamat" class="materialize-textarea" data-length="120"></textarea>
+              <label for="alamat">Alamat</label>
+          </div>
+          </div>
+        </div>
+      </form>
+    </div>
+          </div>
+        </div>
+        <hr>
+      </div>
 
       <!--JavaScript at end of body for optimized loading-->
       <script type="text/javascript" src="js/materialize.min.js"></script>
-      <script>
-          const data = document.querySelectorAll('.data');
-          M.Data.init(data); 
-      </script>
+      
     </body>
   </html>
