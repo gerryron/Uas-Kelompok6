@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.3
+-- version 5.1.0
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 07, 2021 at 08:55 AM
--- Server version: 10.4.14-MariaDB
--- PHP Version: 7.2.34
+-- Generation Time: Apr 09, 2021 at 01:12 PM
+-- Server version: 10.4.18-MariaDB
+-- PHP Version: 8.0.3
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -20,6 +20,8 @@ SET time_zone = "+00:00";
 --
 -- Database: `uas_kelompok6`
 --
+CREATE DATABASE IF NOT EXISTS `uas_kelompok6` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+USE `uas_kelompok6`;
 
 -- --------------------------------------------------------
 
@@ -27,12 +29,13 @@ SET time_zone = "+00:00";
 -- Table structure for table `faskes`
 --
 
-CREATE TABLE `faskes` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `faskes` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `id_wilayah` int(11) NOT NULL,
   `nama_faskes` varchar(100) NOT NULL,
-  `jenis_faskes` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `jenis_faskes` varchar(50) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `faskes`
@@ -49,8 +52,13 @@ INSERT INTO `faskes` (`id`, `id_wilayah`, `nama_faskes`, `jenis_faskes`) VALUES
 -- Table structure for table `pasien`
 --
 
-CREATE TABLE `pasien` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `pasien` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `provinsi` varchar(100) NOT NULL,
+  `kota` varchar(100) NOT NULL,
+  `kecamatan` varchar(100) NOT NULL,
+  `jenis_faskes` varchar(100) NOT NULL,
+  `faskes` varchar(100) NOT NULL,
   `nik` char(16) NOT NULL,
   `nama` varchar(150) NOT NULL,
   `jenis_kelamin` varchar(10) NOT NULL,
@@ -58,8 +66,17 @@ CREATE TABLE `pasien` (
   `tanggal_lahir` date NOT NULL,
   `nomer_hp` varchar(15) NOT NULL,
   `alamat` varchar(255) DEFAULT NULL,
-  `password` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `password` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `pasien`
+--
+
+INSERT INTO `pasien` (`id`, `provinsi`, `kota`, `kecamatan`, `jenis_faskes`, `faskes`, `nik`, `nama`, `jenis_kelamin`, `umur`, `tanggal_lahir`, `nomer_hp`, `alamat`, `password`) VALUES
+(1, 'provinsi banten', 'Kota Tangerang', 'Serpong Utara', 'puskesmas', 'Harapan Kita', '12', '12', 'Laki laki', 16, '2004-02-10', '081213301956', '', '$2y$10$mpJDYqbrlXyL6m/eIP6pQOIKy7LlEao4P8JGiHgUtie7Bu5kQ8S1G'),
+(2, 'provinsi banten', 'Kota Tangerang', 'Serpong Utara', 'rsud', 'Sari Asih', '36781294123', 'Gebbyron', 'Perempuan', 19, '2021-04-05', '081213301958', 'Sangiang', '$2y$10$zr2YFcyMDKoNwu5rk.meVuTt50USQJDRdKrhOXJnJ.7TSrtPZMqxS');
 
 -- --------------------------------------------------------
 
@@ -67,12 +84,13 @@ CREATE TABLE `pasien` (
 -- Table structure for table `wilayah`
 --
 
-CREATE TABLE `wilayah` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `wilayah` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `level` smallint(6) NOT NULL,
   `nama_wilayah` varchar(100) NOT NULL,
-  `parent_id` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `parent_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `wilayah`
@@ -85,50 +103,6 @@ INSERT INTO `wilayah` (`id`, `level`, `nama_wilayah`, `parent_id`) VALUES
 (5, 3, 'Serpong Utara', 4),
 (6, 1, 'Jawa Tengah', NULL),
 (7, 2, 'Temanggung', 6);
-
---
--- Indexes for dumped tables
---
-
---
--- Indexes for table `faskes`
---
-ALTER TABLE `faskes`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `pasien`
---
-ALTER TABLE `pasien`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `wilayah`
---
-ALTER TABLE `wilayah`
-  ADD PRIMARY KEY (`id`);
-
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `faskes`
---
-ALTER TABLE `faskes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
---
--- AUTO_INCREMENT for table `pasien`
---
-ALTER TABLE `pasien`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `wilayah`
---
-ALTER TABLE `wilayah`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
