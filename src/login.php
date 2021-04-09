@@ -1,7 +1,6 @@
 <?php
   session_start();
   require "./functions.php";
-
   // cek ketersediaan cookie
   if (isset($_COOKIE['id']) && isset($_COOKIE['key'])) {
     $id = $_COOKIE['id'];
@@ -9,6 +8,7 @@
 
     $result = mysqli_query($koneksi, "SELECT nomer_hp FROM pasien WHERE id = '$id'");
     $row = mysqli_fetch_assoc($result);
+    var_dump($result);
 
     // cek cookie dan nomer hp
     if ($key === hash('sha256', $row['nomer_hp'])) {
@@ -58,7 +58,7 @@
 
       <style>
           section{
-            background-image: url(img/backgroun.jpg);
+            background-image: url(../img/backgroun.jpg);
             background-repeat: no-repeat;
             background-size: cover;
           }
@@ -108,15 +108,14 @@
                   <input id="password" type="password" name="password" class="validate">
                   <label for="password">Password</label>
                 </div>
+                <div>
+                  <label>
+                    <input type="checkbox" name="remember">
+                    <span>Remember Me</span>
+                  </label>
+                </div>
+                <br>
                 <button type="submit" name="login" class="btn tea">Login</button>
-                <form action="#">
-                  <p>
-                    <label>
-                      <input type="checkbox" />
-                      <span>Remember Me</span>
-                    </label>
-                  </p>
-                <button type="submit" class="btn tea">Login</button>
             </form>
           </div>
         </div>

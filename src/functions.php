@@ -1,5 +1,5 @@
 <?php 
-    $koneksi = mysqli_connect("localhost","root","", "uas_kelompok6");
+    $koneksi = mysqli_connect("localhost","root","P@ssw0rd", "uas_kelompok6");
     if(!$koneksi){
         die("gagal terhubung dengan database : ".mysqli_connect_error());
     } 
