@@ -27,7 +27,7 @@
           <div class="container">
             <div class="nav-wrapper">
               <a href="#!" class="brand-logo">ZA</a>
-              <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+              <a href="#" data-target="mobile-nav" class="sidenav-trigger"><i class="material-icons">menu</i></a>
               <ul class="right hide-on-med-and-down">
                 <li><a href="registrasi.php">Tambah Data</a></li>
               </ul>
@@ -36,8 +36,8 @@
         </nav>
       </div>
           <!--SIDENAV-->
-          <ul class="sidenav" id="mobile-demo">
-            <li><a href="registrasi.php">Tambah Data</a></li>
+          <ul class="sidenav" id="mobile-nav">
+          <li><a href="registrasi.php">Tambah Data</a></li>
           </ul>
         <!--login-->
       <section id="login" class="login">
@@ -64,7 +64,7 @@
       <!--JavaScript at end of body for optimized loading-->
       <script type="text/javascript" src="js/materialize.min.js"></script>
           <script>
-           cons sideNav = document.querySelectorAll('.sidenav');
+           const sideNav = document.querySelectorAll('.sidenav');
            M.Sidenav.init(sideNav);
           </script>
     </body>

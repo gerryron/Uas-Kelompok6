@@ -48,7 +48,7 @@
           <div class="container">
             <div class="nav-wrapper">
               <a href="#!" class="brand-logo">ZA</a>
-              <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+              <a href="#" data-target="mobile-nav" class="sidenav-trigger"><i class="material-icons">menu</i></a>
               <ul class="right hide-on-med-and-down">
                 <li><a href="login.php"> Login </a></li>
               </ul>
@@ -57,7 +57,7 @@
         </nav>
       </div>
           <!--SIDENAV-->
-          <ul class="sidenav" id="mobile-demo">
+          <ul class="sidenav" id="mobile-nav">
             <li><a href="">Lihat Data</a></li>
           </ul>
         <!--Input Data-->
@@ -67,7 +67,7 @@
         <div class="row">
           <div class="col-sm-6">
             <div class="form-group">
-              <label for="provinsi">Provinsi</label>
+              <label for="provinsi"><i class="material-icons">add_location</i>Provinsi</label>
               <select class="form-control" name="provinsi" id="provinsi">
                 <option value="" disabled selected> Pilih Provinsi</option>
                 <?php 
@@ -80,7 +80,7 @@
             </div>
         
             <div class="form-group">
-              <label for="kota">Kabupaten/Kota</label>
+              <label for="kota"><i class="material-icons">add_location</i>Kabupaten/Kota</label>
               <select class="form-control" name="kota" id="kota">
                 <option value="" disabled selected> Pilih Kabupaten/Kota</option>
                   <?php 
@@ -93,7 +93,7 @@
             </div>
   
             <div class="form-group">
-              <label for="kecamatan">Kecamatan</label>
+              <label for="kecamatan"><i class="material-icons">add_location</i>Kecamatan</label>
               <select class="form-control" name="kecamatan" id="kecamatan">
               <option value="" disabled selected> Pilih Kecamatan</option>
                 <?php 
@@ -105,7 +105,7 @@
               </select>
             </div>
             <div class="form-group">
-              <label for="jenis">Jenis Faskes</label>
+              <label for="jenis"><i class="material-icons">local_hospital</i>Jenis Faskes</label>
               <select class="form-control" name="jenis" id="jenis">
               <option value="" disabled selected> Pilih Jenis Faskes</option>
               <option value="Puskesmas" > Puskesmas</option>
@@ -113,7 +113,7 @@
               </select>
             </div>
             <div class="form-group">
-              <label for="faskes">Nama Faskes</label>
+              <label for="faskes"><i class="material-icons">local_hospital</i>Nama Faskes</label>
               <select class="form-control" name="faskes" id="faskes">
                 <option value="" disabled selected> Pilih Nama Faskes</option>
                 <?php 
@@ -126,14 +126,14 @@
             </div>
             <div class="input-field col s12">
               <textarea id="nik" name="nik" class="materialize-textarea" maxlength="16"></textarea>
-              <label for="nik">NIK</label>
+              <label for="nik"><i class="material-icons">create</i>NIK</label>
             </div>
             <div class="input-field col s12">
               <textarea id="nama" name="nama" class="materialize-textarea" data-length="120"></textarea>
-              <label for="nama">Nama</label>
+              <label for="nama"><i class="material-icons">person_pin</i>Nama</label>
             </div>
             <div class="form-group">
-              <label for="jk">Jenis Faskes</label>
+              <label for="jk"><i class="material-icons">people_outline</i>Jenis Faskes</label>
               <select class="form-control" name="jk" id="jk">
               <option value="" disabled selected> Pilih Jenis Kelamin</option>
               <option value="Laki Laki" > Laki-Laki</option>
@@ -142,27 +142,27 @@
             </div>
             <div class="input-field col s6">
               <input id="umur" name="umur" type="number" min="12" max="65" class="validate" required/>
-              <label for="umur">Umur</label>
+              <label for="umur"><i class="material-icons">perm_identity</i>Umur</label>
             </div>
             <div class="input-field col s6">
               <input id="tanggal" name="tgl_lahir" type="text" class="form-control datepicker"  required/>
-              <label for="tanggal">Tanggal Lahir</label>
+              <label for="tanggal"><i class="material-icons">today</i>Tanggal Lahir</label>
             </div>
             <div class="input-field col s12">
               <textarea id="no_hp" name="no_hp" class="materialize-textarea" data-length="120"></textarea>
-              <label for="no_hp">No Hp</label>
+              <label for="no_hp"><i class="material-icons">account_box</i>No Hp</label>
             </div>
             <div class="input-field col s12">
               <textarea id="alamat" name="alamat" class="materialize-textarea" data-length="120"></textarea>
-              <label for="alamat">Alamat</label>
+              <label for="alamat"><i class="material-icons">add_location</i>Alamat</label>
             </div>
             <div class="input-field col s6">
               <input id="password" name="password" type="password"  class="validate" required/>
-              <label for="password">Password</label>
+              <label for="password"><i class="material-icons">lock_outline</i>Password</label>
             </div>
             <div class="input-field col s6">
               <input id="password2" name="password2" type="password"  class="validate" required/>
-              <label for="password2">Konfirmasi Password</label>
+              <label for="password2"><i class="material-icons">lock_outline</i>Konfirmasi Password</label>
             </div>
             <button type="submit" name="submit" class="waves-effect waves-light btn">DAFTAR</button>
           </div>
@@ -173,6 +173,8 @@
       <!--JavaScript at end of body for optimized loading-->
       <script type="text/javascript" src="js/materialize.min.js"></script>
       <script>
+           const sideNav = document.querySelectorAll('.sidenav');
+           M.Sidenav.init(sideNav);
         $(function(){
             $(".datepicker").datepicker({
                 format: 'yyyy-mm-dd',
