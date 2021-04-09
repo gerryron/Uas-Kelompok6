@@ -39,8 +39,8 @@
               <a href="#!" class="brand-logo">ZA</a>
               <a href="#" data-target="mobile-nav" class="sidenav-trigger"><i class="material-icons">menu</i></a>
               <ul class="right hide-on-med-and-down">
-              <li><a href="">Tambah Data</a></li>
-              <li><a href="logout.php">Logout</a></li>
+              	<li><a href="logout.php">Logout</a></li>
+                <li><a href="registrasi.php">Tambah Data</a></li>
               </ul>
             </div>
           </div>
@@ -48,8 +48,8 @@
       </div>
           <!--SIDENAV-->
           <ul class="sidenav" id="mobile-nav">
-            <li><a href="">Tambah Data</a></li>
             <li><a href="logout.php">Logout</a></li>
+            <li><a href="registrasi.php">Tambah Data</a></li>
           </ul>
       <div class="container center bg-info text-white">
         <h2>DAFTAR DATA COVID-19</H2>
