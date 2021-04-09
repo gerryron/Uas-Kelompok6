@@ -32,9 +32,9 @@
 
       <style>
           #pasien{
-            background-image: url(img/gambar.jpeg);
-            background-repeat: no-repeat;
+            background-image: url(img/image.jpg);
             background-size: cover;
+            
           }
       </style>
       <!--Let browser know website is optimized for mobile-->
@@ -58,7 +58,7 @@
       </div>
           <!--SIDENAV-->
           <ul class="sidenav" id="mobile-nav">
-            <li><a href="">Lihat Data</a></li>
+            <li><a href="login.php">Login</a></li>
           </ul>
         <!--Input Data-->
       <form action="" method="post">
