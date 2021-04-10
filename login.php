@@ -55,6 +55,13 @@
                   <input id="password" type="password" class="validate">
                   <label for="password">Password</label>
                 </div>
+                <form action="#">
+                  <p>
+                    <label>
+                      <input type="checkbox" />
+                      <span>Remember Me</span>
+                    </label>
+                  </p>
                 <button type="submit" class="btn tea">Login</button>
             </form>
           </div>
