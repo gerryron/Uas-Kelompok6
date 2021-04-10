@@ -98,10 +98,12 @@
               <td scope="row"><?= $row["jenis_kelamin"] ?></td>
               <td scope="row"><?= $row["umur"] ?></td>
               <td scope="row"><?= $row["nomer_hp"] ?></td>
+              <?php if($row["nomer_hp"] === $noHpUser) :?>
               <td scope="row">
                 <a href="edit.php?id=<?= $row["id"];?>" class="btn-floating waves-effect waves-light cyan"><i class="material-icons">create</i></a>
                 <a href="delete.php?id=<?= $row["id"];?>" class="btn-floating waves-effect waves-light cyan"><i class="material-icons">delete</i>
               </td>
+              <?php endif;?>
             </tr>
             <?php 
               $counter++;

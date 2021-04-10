@@ -8,7 +8,6 @@
 
     $result = mysqli_query($koneksi, "SELECT nomer_hp FROM users WHERE id = '$id'");
     $row = mysqli_fetch_assoc($result);
-    var_dump($result);
 
     // cek cookie dan nomer hp
     if ($key === hash('sha256', $row['nomer_hp'])) {

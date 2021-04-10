@@ -1,5 +1,12 @@
 <?php
+  session_start();
   require "./functions.php";
+
+  if(!isset($_SESSION["login"])) {
+    header("Location: login.php");
+    exit;
+  }
+  
   $userProvinsi = $_GET["prov"];
   $pasien = query("SELECT * FROM pasien WHERE provinsi='$userProvinsi'");
 ?>
