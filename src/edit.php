@@ -1,21 +1,29 @@
 <?php 
+  session_start();
   require "./functions.php";
-  $provinsi = query("SELECT nama_wilayah FROM wilayah WHERE level = 1");
-  $kota = query("SELECT nama_wilayah FROM wilayah WHERE level = 2");
-  $kecamatan = query("SELECT nama_wilayah FROM wilayah WHERE level = 3");
+
+  if(!isset($_SESSION["login"])) {
+    header("Location: login.php");
+    exit;
+  }
+
+  $id = $_GET["id"];
+  $provinsi = query("SELECT * FROM provinsi");
+  $kota = query("SELECT * FROM kabupaten");
+  $kecamatan = query("SELECT * FROM kecamatan");
   $faskes = query("SELECT nama_faskes FROM faskes");
+  $pasien = query("SELECT * FROM pasien where id=$id")[0];
 
   if(isset($_POST["submit"])){
-    if(registrasi($_POST) >0){
-      echo "<script> alert(' data pasien berhasil di tambahkan');</script>";
+    if(updateData($_POST) >0){
+      header("Location: index.php");
+      exit;
     }else{
       echo mysqli_error($koneksi);
     }
   }
 
 ?>
-
-
 
 <!DOCTYPE html>
   <html>
@@ -34,7 +42,6 @@
           #pasien{
             background-image: url(img/image.jpg);
             background-size: cover;
-            
           }
       </style>
       <!--Let browser know website is optimized for mobile-->
@@ -47,10 +54,11 @@
         <nav class="cyan darken-2">
           <div class="container">
             <div class="nav-wrapper">
-              <a href="#!" class="brand-logo">ZA</a>
+              <a href="#!" class="brand-logo">#LawanCorona</a>
               <a href="#" data-target="mobile-nav" class="sidenav-trigger"><i class="material-icons">menu</i></a>
               <ul class="right hide-on-med-and-down">
-                <li><a href="login.php"> Login </a></li>
+              <li><a href="index.php">Home</a></li>
+              <li><a href="logout.php">Logout</a></li>
               </ul>
             </div>
           </div>
@@ -58,64 +66,70 @@
       </div>
           <!--SIDENAV-->
           <ul class="sidenav" id="mobile-nav">
+            <li><a href="index.php">Home</a></li>
             <li><a href="login.php">Login</a></li>
           </ul>
         <!--Input Data-->
       <form action="" method="post">
       <div class="container mb-5" id="pasien">
-	      <h3 align="center" style="margin: 60px 10px 10px 10px;">DATA PASIEN COVID-19</h3><hr>
+	      <h3 align="center" style="margin: 60px 10px 10px 10px;">DAFTAR VAKSIN COVID-19</h3><hr>
         <div class="row">
-          <div class="col-sm-6">
+          <div class="col-sm-12">
             <div class="form-group">
               <label for="provinsi"><i class="material-icons">add_location</i>Provinsi</label>
-              <select class="form-control" name="provinsi" id="provinsi">
-                <option value="" disabled selected> Pilih Provinsi</option>
+              <select class="form-control" name="provinsi" id="provinsi" required>
+                <option value="<?= $pasien["provinsi"]; ?>"> <?= $pasien["provinsi"]; ?></option>
                 <?php 
                   foreach($provinsi as $row) :
-                    $namaProvinsi = $row["nama_wilayah"];
+                    $namaProvinsi = $row["nama"];
                 ?>
                 <option value="<?= $namaProvinsi ?>"> <?= $namaProvinsi ?></option>
                 <?php endforeach;?>
               </select>
             </div>
         
+            <div id="selectedArea-Kota">
             <div class="form-group">
               <label for="kota"><i class="material-icons">add_location</i>Kabupaten/Kota</label>
-              <select class="form-control" name="kota" id="kota">
+              <select class="form-control" name="kota" id="kota" required>
                 <option value="" disabled selected> Pilih Kabupaten/Kota</option>
                   <?php 
                     foreach($kota as $row) :
-                      $namaKota = $row["nama_wilayah"];
+                      $idKota = $row["id_kab"];
+                      $namaKota = $row["nama"];
                   ?>
-                <option value="<?= $namaKota ?>"> <?= $namaKota ?></option>
+                <option value="<?= $idKota ?>"> <?= $namaKota ?></option>
                 <?php endforeach;?>
               </select>
             </div>
   
+            <div id="selectedArea-Kecamatan">
             <div class="form-group">
               <label for="kecamatan"><i class="material-icons">add_location</i>Kecamatan</label>
-              <select class="form-control" name="kecamatan" id="kecamatan">
+              <select class="form-control" name="kecamatan" id="kecamatan" required>
               <option value="" disabled selected> Pilih Kecamatan</option>
                 <?php 
                   foreach($kecamatan as $row) :
-                    $namaKecamatan = $row["nama_wilayah"];
+                    $namaKecamatan = $row["nama"];
                 ?>
                 <option value="<?= $namaKecamatan ?>"> <?= $namaKecamatan ?></option>
                 <?php endforeach;?>
               </select>
             </div>
+            </div>
+            </div>
             <div class="form-group">
               <label for="jenis"><i class="material-icons">local_hospital</i>Jenis Faskes</label>
-              <select class="form-control" name="jenis" id="jenis">
-              <option value="" disabled selected> Pilih Jenis Faskes</option>
+              <select class="form-control" name="jenis" id="jenis" required>
+              <option value="<?= $pasien["jenis_faskes"]; ?>"> <?= $pasien["jenis_faskes"]; ?></option>
               <option value="Puskesmas" > Puskesmas</option>
               <option value="RSUD" > RSUD</option>
               </select>
             </div>
             <div class="form-group">
               <label for="faskes"><i class="material-icons">local_hospital</i>Nama Faskes</label>
-              <select class="form-control" name="faskes" id="faskes">
-                <option value="" disabled selected> Pilih Nama Faskes</option>
+              <select class="form-control" name="faskes" id="faskes" required>
+                <option value="<?= $pasien["faskes"]; ?>"> <?= $pasien["faskes"]; ?></option>
                 <?php 
                   foreach($faskes as $row) :
                     $namaFaskes = $row["nama_faskes"];
@@ -124,46 +138,36 @@
                 <?php endforeach;?>
               </select>
             </div>
-            <div class="input-field col s12">
-              <textarea id="nik" name="nik" class="materialize-textarea" maxlength="16"></textarea>
-              <label for="nik"><i class="material-icons">create</i>NIK</label>
-            </div>
-            <div class="input-field col s12">
-              <textarea id="nama" name="nama" class="materialize-textarea" data-length="120"></textarea>
+            <div class="input-field col s6">
+              <textarea id="nama" name="nama" class="materialize-textarea" data-length="120" required><?= $pasien["nama"]; ?></textarea>
               <label for="nama"><i class="material-icons">person_pin</i>Nama</label>
+            </div>
+            <div class="input-field col s6">
+              <textarea id="nik" name="nik" class="materialize-textarea" maxlength="16" required><?= $pasien["nik"]; ?></textarea>
+              <label for="nik"><i class="material-icons">create</i>NIK</label>
             </div>
             <div class="form-group">
               <label for="jk"><i class="material-icons">people_outline</i>Jenis Faskes</label>
-              <select class="form-control" name="jk" id="jk">
-              <option value="" disabled selected> Pilih Jenis Kelamin</option>
+              <select class="form-control" name="jk" id="jk" required>
+              <option value="<?= $pasien["jenis_kelamin"]; ?>"> <?= $pasien["jenis_kelamin"]; ?></option>
               <option value="Laki Laki" > Laki-Laki</option>
               <option value="Perempuan" > Perempuan</option>
               </select>
             </div>
             <div class="input-field col s6">
-              <input id="umur" name="umur" type="number" min="12" max="65" class="validate" required/>
+              <input id="umur" name="umur" type="number" min="12" max="65" class="validate" value="<?= $pasien["umur"]; ?>" required/>
               <label for="umur"><i class="material-icons">perm_identity</i>Umur</label>
             </div>
             <div class="input-field col s6">
-              <input id="tanggal" name="tgl_lahir" type="text" class="form-control datepicker"  required/>
+              <input id="tanggal" name="tgl_lahir" type="text" class="form-control datepicker" value="<?= $pasien["tanggal_lahir"]; ?>" required/>
               <label for="tanggal"><i class="material-icons">today</i>Tanggal Lahir</label>
             </div>
             <div class="input-field col s12">
-              <textarea id="no_hp" name="no_hp" class="materialize-textarea" data-length="120"></textarea>
-              <label for="no_hp"><i class="material-icons">account_box</i>No Hp</label>
-            </div>
-            <div class="input-field col s12">
-              <textarea id="alamat" name="alamat" class="materialize-textarea" data-length="120"></textarea>
+              <textarea id="alamat" name="alamat" class="materialize-textarea" data-length="120"><?= $pasien["alamat"]; ?></textarea>
               <label for="alamat"><i class="material-icons">add_location</i>Alamat</label>
             </div>
-            <div class="input-field col s6">
-              <input id="password" name="password" type="password"  class="validate" required/>
-              <label for="password"><i class="material-icons">lock_outline</i>Password</label>
-            </div>
-            <div class="input-field col s6">
-              <input id="password2" name="password2" type="password"  class="validate" required/>
-              <label for="password2"><i class="material-icons">lock_outline</i>Konfirmasi Password</label>
-            </div>
+            <input type="text" name="id" value="<?= $id;?>" hidden>
+            <input type="text" name="nomerHp" value="<?= $pasien["nomer_hp"];?>" hidden>
             <button type="submit" name="submit" class="waves-effect waves-light btn">DAFTAR</button>
           </div>
         </div>
@@ -182,6 +186,25 @@
                 todayHighlight: true,
             });
         });
+      </script>
+      <script>
+        var selectedProvinsi = document.getElementById("provinsi");
+        var areaKota = document.getElementById("selectedArea-Kota");
+        
+
+        selectedProvinsi.addEventListener('change', function() {
+
+          var xhr = new XMLHttpRequest();
+          xhr.onreadystatechange = function() {
+            if(xhr.readyState == 4 && xhr.status == 200 ) {
+              areaKota.innerHTML = xhr.responseText;
+            }
+          }
+          
+          xhr.open('GET', '../ajax/wilayah.php?idProv=' + selectedProvinsi[selectedProvinsi.selectedIndex].value, true);
+          xhr.send();
+          
+        })
       </script>
     </body>
   </html>

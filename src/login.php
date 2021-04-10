@@ -6,19 +6,20 @@
     $id = $_COOKIE['id'];
     $key = $_COOKIE['key'];
 
-    $result = mysqli_query($koneksi, "SELECT nomer_hp FROM pasien WHERE id = '$id'");
+    $result = mysqli_query($koneksi, "SELECT nomer_hp FROM users WHERE id = '$id'");
     $row = mysqli_fetch_assoc($result);
     var_dump($result);
 
     // cek cookie dan nomer hp
     if ($key === hash('sha256', $row['nomer_hp'])) {
       $_SESSION['login'] = true;
+      $_SESSION["nohp"] = $row['nomer_hp'];
     }
   }
 
   // jika sudah ada session langsung arahkan ke index
   if (isset($_SESSION['login'])) {
-    header("Location: data.php");
+    header("Location: index.php");
     exit;
   }
 
@@ -26,7 +27,7 @@
     $nomerHp = $_POST["telephone"];
     $password = $_POST["password"];
 
-    $result = mysqli_query($koneksi, "SELECT id, nomer_hp, password FROM pasien WHERE nomer_hp = '$nomerHp'");
+    $result = mysqli_query($koneksi, "SELECT id, nomer_hp, password FROM users WHERE nomer_hp = '$nomerHp'");
 
     if (mysqli_num_rows($result) === 1){
       $row = mysqli_fetch_assoc($result);
@@ -34,13 +35,14 @@
       // set session & cookie 10 menit jika berhasil login
       if (password_verify($password, $row["password"])) {
         $_SESSION["login"] = true;
+        $_SESSION["nohp"] = $row['nomer_hp'];
 
         if (isset($_POST["remember"])){
           setcookie('id', $row['id'], time()+600);
           setcookie('key', hash('sha256', $row['nomer_hp']), time()+600);
         }
-        
-        header("Location: data.php");
+      
+        header("Location: index.php");
         exit;
       }
     }
@@ -76,10 +78,10 @@
         <nav class="cyan darken-2">
           <div class="container">
             <div class="nav-wrapper">
-              <a href="#!" class="brand-logo">ZA</a>
+              <a href="#!" class="brand-logo">#GoVaksin</a>
               <a href="#" data-target="mobile-nav" class="sidenav-trigger"><i class="material-icons">menu</i></a>
               <ul class="right hide-on-med-and-down">
-                <li><a href="registrasi.php">Tambah Data</a></li>
+                <li><a href="registration.php">Registrasi</a></li>
               </ul>
             </div>
           </div>
@@ -87,7 +89,7 @@
       </div>
           <!--SIDENAV-->
           <ul class="sidenav" id="mobile-nav">
-          <li><a href="registrasi.php">Tambah Data</a></li>
+          <li><a href="registration.php">Registrasi</a></li>
           </ul>
         <!--login-->
       <section id="login" class="login">

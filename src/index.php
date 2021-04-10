@@ -1,9 +1,23 @@
 <?php
   session_start();
+  require "./functions.php";
+
   if(!isset($_SESSION["login"])) {
     header("Location: login.php");
     exit;
   }
+
+  $noHpUser = $_SESSION["nohp"];
+  $user = query("SELECT provinsi, kota, kecamatan FROM pasien WHERE nomer_hp='$noHpUser'");
+  if (mysqli_affected_rows($koneksi) > 0) {
+    $_SESSION["register"] = true;
+    $userProvinsi = $user[0]["provinsi"];
+    $pasien = query("SELECT * FROM pasien WHERE provinsi='$userProvinsi'");
+  } else {
+    $pasien = [];
+    header("Location: input.php");
+  }
+
 ?>
 
 <!DOCTYPE html>
@@ -36,11 +50,14 @@
         <nav class="cyan darken-2">
           <div class="container">
             <div class="nav-wrapper">
-              <a href="#!" class="brand-logo">ZA</a>
+              <a href="#!" class="brand-logo">#LawanCorona</a>
               <a href="#" data-target="mobile-nav" class="sidenav-trigger"><i class="material-icons">menu</i></a>
               <ul class="right hide-on-med-and-down">
-              	<li><a href="logout.php">Logout</a></li>
-                <li><a href="registrasi.php">Tambah Data</a></li>
+                <?php if(!$_SESSION["register"]) : ?>
+                  <li><a href="input.php">Daftar Vaksin</a></li>
+                <?php endif; ?>
+                <li><a href="cetak.php?prov=<?= $userProvinsi;?>">Cetak Halaman</a></li>
+                <li><a href="logout.php">Logout</a></li>
               </ul>
             </div>
           </div>
@@ -48,11 +65,13 @@
       </div>
           <!--SIDENAV-->
           <ul class="sidenav" id="mobile-nav">
+            <li><a href="input.php">Daftar Vaksin</a></li>
+            <li><a href="cetak.php">Cetak Halaman</a></li>
             <li><a href="logout.php">Logout</a></li>
-            <li><a href="registrasi.php">Tambah Data</a></li>
           </ul>
       <div class="container center bg-info text-white">
-        <h2>DAFTAR DATA COVID-19</H2>
+        <h3>Daftar Peserta Vaksinasi Covid-19 <?php if(isset($userProvinsi)) echo $userProvinsi; ?></h3>
+        <h4>Per <?= date('d F Y h:i:s', time())?></h4>
         <table class="table text-white">
           <thead>
             <tr>
@@ -62,26 +81,36 @@
               <th scope="col">NIK</th>
               <th scope="col">Jenis Kelamin</th>
               <th scope="col">Umur</th>
-              <th scope="col">No.Hp</th>
+              <th scope="col">No. Hp</th>
               <th scope="col">Opsi</th>
             </tr>
           </thead>
           <tbody>
+            <?php 
+              $counter = 1;
+              foreach($pasien as $row) : 
+            ?>
             <tr>
-              <td scope="row">1</td>
-              <td scope="row">rsud fatmawati</td>
-              <td scope="row">angelina</td>
-              <td scope="row">181011401625</td>
-              <td scope="row">perempuan</td>
-              <td scope="row">23</td>
-              <td scope="row">1234567891234</td>
-              <td scope="row"><a class="btn-floating waves-effect waves-light cyan"><i class="material-icons">create</i>
-                <a class="btn-floating waves-effect waves-light cyan"><i class="material-icons">file_download</i>
-                <a class="btn-floating waves-effect waves-light cyan"><i class="material-icons">delete</i></td>
+              <td scope="row"><?= $counter ?></td>
+              <td scope="row"><?= $row["faskes"] ?></td>
+              <td scope="row"><?= $row["nama"] ?></td>
+              <td scope="row"><?= $row["nik"] ?></td>
+              <td scope="row"><?= $row["jenis_kelamin"] ?></td>
+              <td scope="row"><?= $row["umur"] ?></td>
+              <td scope="row"><?= $row["nomer_hp"] ?></td>
+              <td scope="row">
+                <a href="edit.php?id=<?= $row["id"];?>" class="btn-floating waves-effect waves-light cyan"><i class="material-icons">create</i></a>
+                <a href="delete.php?id=<?= $row["id"];?>" class="btn-floating waves-effect waves-light cyan"><i class="material-icons">delete</i>
+              </td>
             </tr>
+            <?php 
+              $counter++;
+              endforeach;
+            ?>
           </tbody>
         </table>
       </div>
+      
       <!--JavaScript at end of body for optimized loading-->
       <script type="text/javascript" src="../js/materialize.min.js"></script>
       <script>
