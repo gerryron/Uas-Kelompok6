@@ -1,6 +1,7 @@
 <?php
   session_start();
   require "./functions.php";
+  date_default_timezone_set('Asia/Jakarta');
 
   if(!isset($_SESSION["login"])) {
     header("Location: login.php");
@@ -73,7 +74,7 @@
           </ul>
       <div class="container center bg-info text-white">
         <h3>Daftar Peserta Vaksinasi Covid-19 <?php if(isset($userProvinsi)) echo $userProvinsi; ?></h3>
-        <h4>Per <?= date('d F Y h:i:s', time())?></h4>
+        <h4>Per <?= date('d F Y h:i:s')?></h4>
         <table class="table text-white">
           <thead>
             <tr>
