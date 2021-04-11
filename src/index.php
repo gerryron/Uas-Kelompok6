@@ -56,7 +56,7 @@
                 <?php if(!$_SESSION["register"]) : ?>
                   <li><a href="input.php">Daftar Vaksin</a></li>
                 <?php endif; ?>
-                <li><a href="cetak.php?prov=<?= $userProvinsi;?>">Cetak Halaman</a></li>
+                <li><a href="cetak.php?prov=<?= $userProvinsi;?>" target="_blank">Cetak Halaman</a></li>
                 <li><a href="logout.php">Logout</a></li>
               </ul>
             </div>
@@ -65,9 +65,11 @@
       </div>
           <!--SIDENAV-->
           <ul class="sidenav" id="mobile-nav">
+          <?php if(!$_SESSION["register"]) : ?>
             <li><a href="input.php">Daftar Vaksin</a></li>
-            <li><a href="cetak.php">Cetak Halaman</a></li>
-            <li><a href="logout.php">Logout</a></li>
+          <?php endif; ?>
+          <li><a href="cetak.php?prov=<?= $userProvinsi;?>" target="_blank">Cetak Halaman</a></li>
+          <li><a href="logout.php">Logout</a></li>
           </ul>
       <div class="container center bg-info text-white">
         <h3>Daftar Peserta Vaksinasi Covid-19 <?php if(isset($userProvinsi)) echo $userProvinsi; ?></h3>
